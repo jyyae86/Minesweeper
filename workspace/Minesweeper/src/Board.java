@@ -110,7 +110,7 @@ public class Board {
 					System.out.print('*');
 					System.out.print(" ");
 				}else{
-					System.out.print(board[j][i].getContents());
+					System.out.print(board[i][j].getContents());
 					System.out.print(" ");
 				}
 			}
