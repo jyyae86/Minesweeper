@@ -35,14 +35,20 @@ public class Board {
 	
 	//instance variables for Board
 	private Cell[][] board = null;
+	private int length;
+	private int width;
+	private int numOfBombs;
 	
 	//singleton??
-	public Board(int length, int width){
+	public Board(int length, int width, int numOfBombs){
 		//todo change boundaries for bigger boards
 		//todo choose number of bombs
-		board = new Cell[9][9];
+		this.length = length;
+		this.width = width;
+		this.numOfBombs = numOfBombs;
+		board = new Cell[length][width];
 		//board = new Cell[length][width];
-		this.resetBoard(length, width);
+		this.resetBoard();
 	}
 	
 //	public getInstance(){
@@ -51,7 +57,7 @@ public class Board {
 //		}
 //	}
 	
-	public void resetBoard(int length, int width){
+	public void resetBoard(){
 		//create an empty board
 		for(int i = 0; i < length; i++){
 			for(int j = 0; j < width; j++){
@@ -69,9 +75,9 @@ public class Board {
 		int counter = 0;
 		int x = 0;
 		int y = 0;
-		while(counter != 10){
-			x = r.nextInt(9);
-			y = r.nextInt(9);
+		while(counter != numOfBombs){
+			x = r.nextInt(length);
+			y = r.nextInt(width);
 			//very shitty way of doing it
 			if(board[x][y].getContents() != 9){
 				board[x][y].setContents(9);
@@ -81,7 +87,7 @@ public class Board {
 						int tempx = x + a;
 						int tempy = y + b;
 						if(a != 0 || b != 0){ //check if it is itself
-							if((tempx > -1 && tempx < 9) && (tempy > -1 && tempy < 9)){ //check if it is out of bounds
+							if((tempx > -1 && tempx < length) && (tempy > -1 && tempy < width)){ //check if it is out of bounds
 								if(board[tempx][tempy].getContents() < 9){ //check if it is a bomb
 									board[tempx][tempy].incrementContents();
 								}
@@ -104,8 +110,8 @@ public class Board {
 //	}
 	
 	public void display(){
-		for(int i = 0; i < 9; i++){
-			for(int j = 0; j < 9; j++){
+		for(int i = 0; i < length; i++){
+			for(int j = 0; j < width; j++){
 				if(board[i][j].getContents() == 9){
 					System.out.print('*');
 					System.out.print(" ");
